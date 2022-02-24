@@ -23,6 +23,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  desktop_drop: ^0.3.0
+  macos_ui: ^0.10.0+1
+  shared_preferences: ^2.0.6
+  file_picker: ^4.3.0
+  path_provider:
+    path: path_provider-2.0.4
+  path_provider_macos:
+    path: path_provider_macos-2.0.4
+  provider: ^5.0.0
+  get: 4.5.1
+  event_bus: ^2.0.0
+  oktoast: ^3.1.5
+  window_manager: ^0.1.7
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,8 +58,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

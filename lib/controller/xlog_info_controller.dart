@@ -19,6 +19,7 @@ class XlogInfoController extends GetxController {
       Directory(path.normalize(path.join(mainFile.path, _assetsPath)));
 
   final PathProviderPlatform provider = PathProviderUtil.provider();
+  var isEnableCrypt = true.obs;
   var taskList = <XlogInfoItemViewModel>[].obs;
   var savePath = "".obs;
   var taskCount = 0.obs;

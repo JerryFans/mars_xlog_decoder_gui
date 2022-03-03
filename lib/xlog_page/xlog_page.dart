@@ -27,6 +27,12 @@ class _XlogPageState extends State<XlogPage> {
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((pre) async {
+      var isEnableCrypt = pre.getBool(KEnableCryptKey);
+      if (isEnableCrypt == null) {
+        pre.setBool(KEnableCryptKey, true);
+      } else {
+        controller.isEnableCrypt.value = isEnableCrypt;
+      }
       var savePath = pre.getString(KXlogSavePathKey);
       if (savePath == null || savePath.isEmpty) {
         try {
@@ -75,11 +81,7 @@ class _XlogPageState extends State<XlogPage> {
                       children: [
                         Row(
                           children: [
-                            Text('Build PB Version：'),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Text('CryptMd5'),
+                            Text('PRIVATE_KEY'),
                             SizedBox(
                               width: 15,
                             ),
@@ -99,7 +101,23 @@ class _XlogPageState extends State<XlogPage> {
                             ),
                           ],
                         ),
-                        
+                        Obx(() => Row(
+                          children: [
+                            Text("Enable crypt"),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            MacosCheckbox(
+                              value: controller.isEnableCrypt.value,
+                              onChanged: (isEnbale) {
+                                controller.isEnableCrypt.value = isEnbale;
+                                SharedPreferences.getInstance().then((value) =>
+                                    value.setBool(
+                                        KEnableCryptKey, isEnbale));
+                              },
+                            ),
+                          ],
+                        ),),
                       ],
                     ),
                   )),

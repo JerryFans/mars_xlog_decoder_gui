@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIF-M5-wdK">
+                                <rect key="frame" x="139.5" y="189" width="135" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add Warning Log"/>
+                                <connections>
+                                    <action selector="warningClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0eD-0O-I5k"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvV-hk-gk0">
+                                <rect key="frame" x="144.5" y="235" width="125" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add Debug Log"/>
+                                <connections>
+                                    <action selector="debugClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2v4-e7-i9w"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGo-uj-RvH">
+                                <rect key="frame" x="154" y="281" width="106" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add Info Log"/>
+                                <connections>
+                                    <action selector="infoLogClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kq7-lI-4Al"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIH-cK-n9X">
+                                <rect key="frame" x="150" y="327" width="114" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add Error Log"/>
+                                <connections>
+                                    <action selector="errorClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="siZ-BI-caL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rIH-cK-n9X" firstAttribute="centerX" secondItem="eGo-uj-RvH" secondAttribute="centerX" id="5u4-v4-R39"/>
+                            <constraint firstItem="eGo-uj-RvH" firstAttribute="centerX" secondItem="wvV-hk-gk0" secondAttribute="centerX" id="6No-hT-rwy"/>
+                            <constraint firstItem="OIF-M5-wdK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="145" id="EUM-D8-4ad"/>
+                            <constraint firstItem="OIF-M5-wdK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="HmI-D6-0E6"/>
+                            <constraint firstItem="wvV-hk-gk0" firstAttribute="top" secondItem="OIF-M5-wdK" secondAttribute="bottom" constant="15" id="ebc-Jk-1Y9"/>
+                            <constraint firstItem="wvV-hk-gk0" firstAttribute="centerX" secondItem="OIF-M5-wdK" secondAttribute="centerX" id="fX0-gO-9y6"/>
+                            <constraint firstItem="rIH-cK-n9X" firstAttribute="top" secondItem="eGo-uj-RvH" secondAttribute="bottom" constant="15" id="k5f-qd-HFp"/>
+                            <constraint firstItem="eGo-uj-RvH" firstAttribute="top" secondItem="wvV-hk-gk0" secondAttribute="bottom" constant="15" id="kLo-Om-k0C"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="90"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

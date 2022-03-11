@@ -4,6 +4,14 @@ A Flutter Desktop GUI To Decode Tencent Mars Xlog File （基于腾讯 Mars Xlog
 
 ![](https://github.com/JerryFans/mars_xlog_decoder_gui/blob/master/xlog_decoder_preview.png)
 
+## Usage
+
+## Platform Support
+
+| Linux | macOS | Windows |
+| :---: | :---: | :-----: |
+|   ➖   |   ✔️   |    ➖  |
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

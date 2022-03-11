@@ -3,6 +3,7 @@ import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:mars_xlog_decoder_gui/controller/const_util.dart';
@@ -32,6 +33,10 @@ class _XlogPageState extends State<XlogPage> {
         pre.setBool(KEnableCryptKey, true);
       } else {
         controller.isEnableCrypt.value = isEnableCrypt;
+      }
+      var privateKey = pre.getString(KCryptPrivateKey);
+      if (privateKey != null) {
+        controller.cryptMd5.value = privateKey;
       }
       var savePath = pre.getString(KXlogSavePathKey);
       if (savePath == null || savePath.isEmpty) {
@@ -94,30 +99,154 @@ class _XlogPageState extends State<XlogPage> {
                                       controller.cryptMd5.value = v;
                                       SharedPreferences.getInstance()
                                           .then((pre) async {
-                                        pre.setString(KCryptMD5, v);
+                                        pre.setString(KCryptPrivateKey, v);
                                       });
                                     },
                                   )),
                             ),
                           ],
                         ),
-                        Obx(() => Row(
-                          children: [
-                            Text("Enable crypt"),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            MacosCheckbox(
-                              value: controller.isEnableCrypt.value,
-                              onChanged: (isEnbale) {
-                                controller.isEnableCrypt.value = isEnbale;
-                                SharedPreferences.getInstance().then((value) =>
-                                    value.setBool(
-                                        KEnableCryptKey, isEnbale));
-                              },
-                            ),
-                          ],
-                        ),),
+                        Obx(
+                          () => Row(
+                            children: [
+                              PushButton(
+                                buttonSize: ButtonSize.large,
+                                child: Text('使用帮助'),
+                                onPressed: () async {
+                                  showMacosAlertDialog(
+                                    barrierDismissible: true,
+                                    useRootNavigator: false,
+                                    context: context,
+                                    builder: (context) => MacosAlertDialog(
+                                      appIcon: Icon(Icons.subway_sharp),
+                                      title: Text(
+                                        '提示',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
+                                      message: Text(
+                                        '项目根目录中xlog_ios_demo 文件夹 为iOS 事例程序，已配置默认pub_key对应private_key为 145aa7717bf9745b91e9569b80bbf1eedaa6cc6cd0e26317d810e35710f44cf8 。如有需要可点击生成 RSA Key重新生成，生成后修改示例程序JRXlogManager 文件中pub_key即可。',
+                                      ),
+                                      horizontalActions: false,
+                                      primaryButton: PushButton(
+                                        buttonSize: ButtonSize.large,
+                                        child: const Text('复制Private Key'),
+                                        onPressed: () {
+                                          ClipboardData data = ClipboardData(
+                                              text:
+                                                  "145aa7717bf9745b91e9569b80bbf1eedaa6cc6cd0e26317d810e35710f44cf8");
+                                          Clipboard.setData(data);
+                                          controller.cryptMd5.value =
+                                              "145aa7717bf9745b91e9569b80bbf1eedaa6cc6cd0e26317d810e35710f44cf8";
+                                          SharedPreferences.getInstance()
+                                              .then((pre) async {
+                                            pre.setString(KCryptPrivateKey,
+                                                "145aa7717bf9745b91e9569b80bbf1eedaa6cc6cd0e26317d810e35710f44cf8");
+                                          });
+                                          showToast("已复制到粘贴板及复制Private Key 文本框",
+                                              textPadding: EdgeInsets.all(15));
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      secondaryButton: PushButton(
+                                        buttonSize: ButtonSize.large,
+                                        child: const Text('知道了'),
+                                        onPressed: Navigator.of(context).pop,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              PushButton(
+                                buttonSize: ButtonSize.large,
+                                child: Text('生成 RSA Key'),
+                                onPressed: () async {
+                                  var result = await controller.genKey();
+                                  showMacosAlertDialog(
+                                    barrierDismissible: true,
+                                    useRootNavigator: false,
+                                    context: context,
+                                    builder: (context) => MacosAlertDialog(
+                                      appIcon: Icon(Icons.subway_sharp),
+                                      title: Text(
+                                        '请记住你生成的RSA Key',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
+                                      message: Text(
+                                        result,
+                                      ),
+                                      horizontalActions: false,
+                                      primaryButton: PushButton(
+                                        buttonSize: ButtonSize.large,
+                                        child: const Text('复制'),
+                                        onPressed: () {
+                                          ClipboardData data =
+                                              ClipboardData(text: result);
+                                          Clipboard.setData(data);
+                                          showToast("已复制到粘贴板",
+                                              textPadding: EdgeInsets.all(15));
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      secondaryButton: PushButton(
+                                        buttonSize: ButtonSize.large,
+                                        child: const Text('取消'),
+                                        onPressed: Navigator.of(context).pop,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text("开启RSA加密"),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              MacosCheckbox(
+                                value: controller.isEnableCrypt.value,
+                                onChanged: (isEnbale) {
+                                  controller.isEnableCrypt.value = isEnbale;
+                                  if (isEnbale == false) {
+                                    showMacosAlertDialog(
+                                    barrierDismissible: true,
+                                    useRootNavigator: false,
+                                    context: context,
+                                    builder: (context) => MacosAlertDialog(
+                                      appIcon: Icon(Icons.subway_sharp),
+                                      title: Text(
+                                        '提示',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
+                                      message: Text(
+                                        '请确认 XLogConfig 类中 pub_key 为空串。 此方法为不加密日志内容有泄露风险，请慎用。',
+                                      ),
+                                      horizontalActions: false,
+                                      primaryButton: PushButton(
+                                        buttonSize: ButtonSize.large,
+                                        child: const Text('知道了'),
+                                        onPressed: Navigator.of(context).pop,
+                                      ),
+                                    ),
+                                  );
+                                  }
+                                  SharedPreferences.getInstance().then(
+                                      (value) => value.setBool(
+                                          KEnableCryptKey, isEnbale));
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )),
@@ -131,8 +260,8 @@ class _XlogPageState extends State<XlogPage> {
                         if (await dir.exists() == true) {
                           print("is dir");
                           for (var element in dir.listSync()) {
-                             var file = File(element.path);
-                              collectionFiles.add(file);
+                            var file = File(element.path);
+                            collectionFiles.add(file);
                           }
                         } else {
                           var file = File(e.path);

@@ -10,7 +10,6 @@
 #define JRDebugMessage  [[NSString stringWithFormat:@"func = %s, line = %d", __FUNCTION__, __LINE__] UTF8String]
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-
+@property (nonatomic, strong) UIWindow *window;
 @end
 

@@ -12,6 +12,8 @@
 #import <mars/xlog/xlogger.h>
 #import <sys/xattr.h>
 
+NSString * const XlogDirName = @"/testXlog";
+
 @implementation JRXlogManager
 
 static JRXlogManager *shareInstance = nil;
@@ -21,7 +23,7 @@ static JRXlogManager *shareInstance = nil;
 }
 
 - (void)initXlog:(const char *)prefixName pathName:(NSString *)pathName {
-    NSString* logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:pathName];
+    NSString* logPath = getXlogPath(pathName);
     
     // set do not backup for logpath
     const char* attrName = "com.apple.MobileBackup";
@@ -40,12 +42,12 @@ static JRXlogManager *shareInstance = nil;
     config.mode_ = mars::xlog::kAppenderAsync;
     config.logdir_ = [logPath UTF8String];
     config.nameprefix_ = prefixName;
-//    config.pub_key_ = "";
-    config.pub_key_ = "572d1e2710ae5fbca54c76a382fdd44050b3a675cb2bf39feebe85ef63d947aff0fa4943f1112e8b6af34bebebbaefa1a0aae055d9259b89a1858f7cc9af9df1";
     config.compress_mode_ = mars::xlog::kZlib;
     config.compress_level_ = 0;
     config.cachedir_ = "";
     config.cache_days_ = 0;
+    //    config.pub_key_ = "";
+        config.pub_key_ = "572d1e2710ae5fbca54c76a382fdd44050b3a675cb2bf39feebe85ef63d947aff0fa4943f1112e8b6af34bebebbaefa1a0aae055d9259b89a1858f7cc9af9df1";
     
 //    PRIV_KEY = "145aa7717bf9745b91e9569b80bbf1eedaa6cc6cd0e26317d810e35710f44cf8"
 //    PUB_KEY = "572d1e2710ae5fbca54c76a382fdd44050b3a675cb2bf39feebe85ef63d947aff0fa4943f1112e8b6af34bebebbaefa1a0aae055d9259b89a1858f7cc9af9df1"

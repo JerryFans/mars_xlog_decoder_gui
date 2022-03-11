@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B9EC3B364AC9D601B807062 /* Pods_xlog_ios_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0423CF35F1CB04AC576A4E5B /* Pods_xlog_ios_demo.framework */; };
 		B4B43DF627D3660A007F746E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B43DF527D3660A007F746E /* SceneDelegate.m */; };
 		B4B43DF927D3660A007F746E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B43DF827D3660A007F746E /* ViewController.m */; };
 		B4B43DFC27D3660A007F746E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4B43DFA27D3660A007F746E /* Main.storyboard */; };
@@ -25,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0423CF35F1CB04AC576A4E5B /* Pods_xlog_ios_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xlog_ios_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		459BE23BB6E617A0CE45C9B7 /* Pods-xlog_ios_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xlog_ios_demo.release.xcconfig"; path = "Target Support Files/Pods-xlog_ios_demo/Pods-xlog_ios_demo.release.xcconfig"; sourceTree = "<group>"; };
+		48C0152DDCE8875556999FA5 /* Pods-xlog_ios_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xlog_ios_demo.debug.xcconfig"; path = "Target Support Files/Pods-xlog_ios_demo/Pods-xlog_ios_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		B4B43DEE27D3660A007F746E /* xlog_ios_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xlog_ios_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B43DF127D3660A007F746E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B4B43DF427D3660A007F746E /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -60,18 +64,29 @@
 				B4B43E1F27D3670D007F746E /* libresolv.9.tbd in Frameworks */,
 				B4B43E2827D36891007F746E /* mars.framework in Frameworks */,
 				B4B43E2127D3671B007F746E /* libz.tbd in Frameworks */,
+				9B9EC3B364AC9D601B807062 /* Pods_xlog_ios_demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B0640423BE6455811AA0522 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				48C0152DDCE8875556999FA5 /* Pods-xlog_ios_demo.debug.xcconfig */,
+				459BE23BB6E617A0CE45C9B7 /* Pods-xlog_ios_demo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B4B43DE527D3660A007F746E = {
 			isa = PBXGroup;
 			children = (
 				B4B43DF027D3660A007F746E /* xlog_ios_demo */,
 				B4B43DEF27D3660A007F746E /* Products */,
 				B4B43E1D27D366FD007F746E /* Frameworks */,
+				8B0640423BE6455811AA0522 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +125,7 @@
 				B4B43E2227D36723007F746E /* CoreTelephony.framework */,
 				B4B43E2027D36714007F746E /* libz.tbd */,
 				B4B43E1E27D366FE007F746E /* libresolv.9.tbd */,
+				0423CF35F1CB04AC576A4E5B /* Pods_xlog_ios_demo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -142,9 +158,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4B43E0727D3660D007F746E /* Build configuration list for PBXNativeTarget "xlog_ios_demo" */;
 			buildPhases = (
+				032DEC54A8B4353C82CF48A6 /* [CP] Check Pods Manifest.lock */,
 				B4B43DEA27D3660A007F746E /* Sources */,
 				B4B43DEB27D3660A007F746E /* Frameworks */,
 				B4B43DEC27D3660A007F746E /* Resources */,
+				3F918F0E5E3852C815297220 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,6 +217,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		032DEC54A8B4353C82CF48A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-xlog_ios_demo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3F918F0E5E3852C815297220 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-xlog_ios_demo/Pods-xlog_ios_demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-xlog_ios_demo/Pods-xlog_ios_demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-xlog_ios_demo/Pods-xlog_ios_demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B4B43DEA27D3660A007F746E /* Sources */ = {
@@ -351,12 +411,14 @@
 		};
 		B4B43E0827D3660D007F746E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48C0152DDCE8875556999FA5 /* Pods-xlog_ios_demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4L75765R87;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/xlog_ios_demo/Mars/Mars",
@@ -383,12 +445,14 @@
 		};
 		B4B43E0927D3660D007F746E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 459BE23BB6E617A0CE45C9B7 /* Pods-xlog_ios_demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4L75765R87;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/xlog_ios_demo/Mars/Mars",

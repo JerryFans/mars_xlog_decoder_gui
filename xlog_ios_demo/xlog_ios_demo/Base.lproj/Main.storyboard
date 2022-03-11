@@ -16,6 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jp9-cO-2Da">
+                                <rect key="frame" x="303" y="44" width="96" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="upload Log"/>
+                                <connections>
+                                    <action selector="uoloadLog:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8au-aV-cm6"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIF-M5-wdK">
                                 <rect key="frame" x="139.5" y="189" width="135" height="31"/>
                                 <state key="normal" title="Button"/>
@@ -54,12 +62,14 @@
                         <constraints>
                             <constraint firstItem="rIH-cK-n9X" firstAttribute="centerX" secondItem="eGo-uj-RvH" secondAttribute="centerX" id="5u4-v4-R39"/>
                             <constraint firstItem="eGo-uj-RvH" firstAttribute="centerX" secondItem="wvV-hk-gk0" secondAttribute="centerX" id="6No-hT-rwy"/>
+                            <constraint firstItem="jp9-cO-2Da" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="CrV-Ro-2AL"/>
                             <constraint firstItem="OIF-M5-wdK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="145" id="EUM-D8-4ad"/>
                             <constraint firstItem="OIF-M5-wdK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="HmI-D6-0E6"/>
                             <constraint firstItem="wvV-hk-gk0" firstAttribute="top" secondItem="OIF-M5-wdK" secondAttribute="bottom" constant="15" id="ebc-Jk-1Y9"/>
                             <constraint firstItem="wvV-hk-gk0" firstAttribute="centerX" secondItem="OIF-M5-wdK" secondAttribute="centerX" id="fX0-gO-9y6"/>
                             <constraint firstItem="rIH-cK-n9X" firstAttribute="top" secondItem="eGo-uj-RvH" secondAttribute="bottom" constant="15" id="k5f-qd-HFp"/>
                             <constraint firstItem="eGo-uj-RvH" firstAttribute="top" secondItem="wvV-hk-gk0" secondAttribute="bottom" constant="15" id="kLo-Om-k0C"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jp9-cO-2Da" secondAttribute="trailing" constant="15" id="zFx-PV-piq"/>
                         </constraints>
                     </view>
                 </viewController>

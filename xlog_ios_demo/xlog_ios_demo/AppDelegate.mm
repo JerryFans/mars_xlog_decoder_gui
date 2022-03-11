@@ -20,7 +20,7 @@
     //这里没有登录，应该登录成功后 重新close 及初始化一遍
     //should login success do this code
     [[JRXlogManager shared] closeXlog];
-    [[JRXlogManager shared] initXlog:[@"test_xlog_userId_nosec" UTF8String] pathName:@"/testXlog"];
+    [[JRXlogManager shared] initXlog:[@"test_xlog_userId" UTF8String] pathName:XlogDirName];
     
     [[JRXlogManager shared] infoLogWithTag:JRDebugMessage Content:@"App init()"];
     return YES;

@@ -34,13 +34,13 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         final appTheme = context.watch<AppTheme>();
         return MacosApp(
-          title: 'SD Dev Tool',
+          title: 'Xlog Decoder',
           theme: MacosThemeData.light(),
           darkTheme: MacosThemeData.dark(),
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           home: MyHomePage(
-            title: 'SD Dev Tool',
+            title: 'Xlog Decoder',
           ),
         );
       },

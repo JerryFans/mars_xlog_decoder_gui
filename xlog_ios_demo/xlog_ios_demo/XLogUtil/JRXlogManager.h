@@ -7,6 +7,13 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const XlogDirName;
+
+static inline NSString* getXlogPath(NSString *pathName) {
+    NSString* logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:pathName];
+    return logPath;
+}
+
 typedef NS_ENUM(NSInteger, XLoggerType) {
     XLoggerTypeDebug,
     XLoggerTypeInfo,

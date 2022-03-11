@@ -14,7 +14,7 @@ void main() async {
   await windowManager.ensureInitialized();
   windowManager.waitUntilReadyToShow().then((_) async {
     await windowManager.setResizable(false);
-    await windowManager.setSize(Size(1064, 800));
+    await windowManager.setSize(Size(1024, 800));
     await windowManager.show();
   });
   runApp(GetMaterialApp(
@@ -58,7 +58,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int pageIndex = 0;
 
   final List<Widget> pages = [
@@ -92,9 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
               useRootNavigator: false,
               context: context,
               builder: (context) => MacosAlertDialog(
-                appIcon: Icon(Icons.subway_sharp),
+                appIcon: Image.asset(
+                  "images/app_icon.png",
+                  width: 64,
+                  height: 64,
+                ),
                 title: Text(
-                  'Mars Xlog Decoder Tool v1.0',
+                  'Mars Xlog Decoder Tool',
                 ),
                 message: Text(
                   'Copyright © Jerryfans 2022',
@@ -107,10 +110,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            leading: Icon(Icons.subway_sharp),
+            leading: Image.asset(
+              "images/app_icon.png",
+              width: 32,
+              height: 32,
+            ),
             title: Text(
-                  'Xlog Decoder Tool v1.0',
-                ),
+              'Xlog Decoder Tool',
+            ),
             subtitle: Text('Copyright © Jerryfans'),
           ),
         ),

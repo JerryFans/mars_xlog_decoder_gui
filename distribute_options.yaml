@@ -1,0 +1,24 @@
+# flutter_distributor release --name prod --jobs release-macos-dmg
+output: release_app/
+releases:
+  - name: prod
+    jobs:
+      - name: release-macos-dmg
+        package:
+          platform: macos
+          target: dmg
+          build_args:
+            dart-define:
+              APP_ENV: production
+        publish:
+          target: github
+          args:
+            repo-owner: JerryFans
+            repo-name: mars_xlog_decoder_gui
+      - name: release-windows-exe
+        package:
+          platform: windows
+          target: exe
+          build_args:
+            dart-define:
+              APP_ENV: production

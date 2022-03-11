@@ -29,34 +29,28 @@
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd_HH-mm";
     NSString *zipPath = [tmpPath stringByAppendingPathComponent:[NSString stringWithFormat:@"logs_%@.zip", [formatter stringFromDate:NSDate.date]]];
-    BOOL result = [SSZipArchive createZipFileAtPath:zipPath withContentsOfDirectory:tmpLogPath];
-    if(result) {
-        NSURL *url = [NSURL fileURLWithPath:zipPath];
-        [self showsUIActivityVControllerWithUrlrs:@[url]];
-    } else {
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"Zip file fail"];
-    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        BOOL result = [SSZipArchive createZipFileAtPath:zipPath withContentsOfDirectory:tmpLogPath];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            if(result) {
+                NSURL *url = [NSURL fileURLWithPath:zipPath];
+                [self showsUIActivityVControllerWithUrlrs:@[url]];
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"Zip file fail"];
+            }
+        });
+    });
 }
 
 - (void)showsUIActivityVControllerWithUrlrs:(NSArray<NSURL *> *)urls {
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:urls applicationActivities:nil];
-    NSArray *excludedActivities = @[UIActivityTypeAirDrop,
-                                    UIActivityTypePostToWeibo,
-                                    UIActivityTypeMessage, UIActivityTypeMail,
-                                    UIActivityTypePrint, UIActivityTypeCopyToPasteboard,
-                                    UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,
-                                    UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
-                                    UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo,
-    ];
-    controller.excludedActivityTypes = excludedActivities;
     
     if ([(NSString *)[UIDevice currentDevice].model hasPrefix:@"iPad"]) {
         controller.popoverPresentationController.sourceView = self.view;
         controller.popoverPresentationController.sourceRect = CGRectMake([UIScreen mainScreen].bounds.size.width * 0.5, [UIScreen mainScreen].bounds.size.height, 10, 10);
     }
     [self presentViewController:controller animated:YES completion:^{
-        [SVProgressHUD dismiss];
     }];
 }
 

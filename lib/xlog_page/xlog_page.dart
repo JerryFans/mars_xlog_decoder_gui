@@ -118,7 +118,11 @@ class _XlogPageState extends State<XlogPage> {
                                     useRootNavigator: false,
                                     context: context,
                                     builder: (context) => MacosAlertDialog(
-                                      appIcon: Icon(Icons.subway_sharp),
+                                      appIcon: Image.asset(
+                                        "images/app_icon.png",
+                                        width: 64,
+                                        height: 64,
+                                      ),
                                       title: Text(
                                         '提示',
                                         style: TextStyle(
@@ -171,7 +175,11 @@ class _XlogPageState extends State<XlogPage> {
                                     useRootNavigator: false,
                                     context: context,
                                     builder: (context) => MacosAlertDialog(
-                                      appIcon: Icon(Icons.subway_sharp),
+                                      appIcon: Image.asset(
+                                        "images/app_icon.png",
+                                        width: 64,
+                                        height: 64,
+                                      ),
                                       title: Text(
                                         '请记住你生成的RSA Key',
                                         style: TextStyle(
@@ -216,28 +224,32 @@ class _XlogPageState extends State<XlogPage> {
                                   controller.isEnableCrypt.value = isEnbale;
                                   if (isEnbale == false) {
                                     showMacosAlertDialog(
-                                    barrierDismissible: true,
-                                    useRootNavigator: false,
-                                    context: context,
-                                    builder: (context) => MacosAlertDialog(
-                                      appIcon: Icon(Icons.subway_sharp),
-                                      title: Text(
-                                        '提示',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16),
+                                      barrierDismissible: true,
+                                      useRootNavigator: false,
+                                      context: context,
+                                      builder: (context) => MacosAlertDialog(
+                                        appIcon: Image.asset(
+                                          "images/app_icon.png",
+                                          width: 64,
+                                          height: 64,
+                                        ),
+                                        title: Text(
+                                          '提示',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16),
+                                        ),
+                                        message: Text(
+                                          '请确认 XLogConfig 类中 pub_key 为空串。 此方法为不加密日志内容有泄露风险，请慎用。',
+                                        ),
+                                        horizontalActions: false,
+                                        primaryButton: PushButton(
+                                          buttonSize: ButtonSize.large,
+                                          child: const Text('知道了'),
+                                          onPressed: Navigator.of(context).pop,
+                                        ),
                                       ),
-                                      message: Text(
-                                        '请确认 XLogConfig 类中 pub_key 为空串。 此方法为不加密日志内容有泄露风险，请慎用。',
-                                      ),
-                                      horizontalActions: false,
-                                      primaryButton: PushButton(
-                                        buttonSize: ButtonSize.large,
-                                        child: const Text('知道了'),
-                                        onPressed: Navigator.of(context).pop,
-                                      ),
-                                    ),
-                                  );
+                                    );
                                   }
                                   SharedPreferences.getInstance().then(
                                       (value) => value.setBool(
@@ -422,13 +434,5 @@ class _XlogPageState extends State<XlogPage> {
 
   Future<bool> checkCanPicker() async {
     return true;
-  }
-
-  @override
-  void draggingFileEntered() {
-    print("flutter: draggingFileEntered");
-    setState(() {
-      visibilityTips = true;
-    });
   }
 }

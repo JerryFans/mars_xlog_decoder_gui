@@ -14,7 +14,7 @@ A Flutter Desktop GUI To Decode Tencent Mars Xlog File （基于腾讯 Mars Xlog
 
 ## Release
 
-[XlogDecoder_for_macos.dmg](https://github.com/JerryFans/mars_xlog_decoder_gui/releases/download/v1.0.0/mars_xlog_decoder_gui-1.0.0+1-macos.dmg)
+[XlogDecoder_for_macos.zip](https://github.com/JerryFans/mars_xlog_decoder_gui/releases/download/v1.2.0/XlogDecoder.zip)
 
 
 ## Getting Started

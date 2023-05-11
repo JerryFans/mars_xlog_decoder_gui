@@ -8,7 +8,7 @@ import Foundation
 import desktop_drop
 import native_context_menu
 import path_provider_macos
-import shared_preferences_macos
+import shared_preferences_foundation
 import window_manager
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {

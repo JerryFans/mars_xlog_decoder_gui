@@ -48,12 +48,18 @@ class XlogInfoController extends GetxController {
   }
 
   Future<String> genKey() async {
-    var pyPath = path.joinAll([_assetsDir.path, "gen_key", "gen_key"]);
-
-    var process = await Process.run(pyPath, []);
+    var pyPath = path.joinAll([
+      _assetsDir.path,
+      Platform.isWindows ? "xlog-decoder.exe" : "xlog-decoder",
+    ]);
+    var process = await Process.run(pyPath, ["gen-key"]);
     print("result:\n");
-    print("${process.stdout}");
-    return process.stdout;
+    print(process.stdout);
+    return process.stdout
+        .toString()
+        .split("\n")[0]
+        .split("private_key:")[1]
+        .trim();
   }
 
   void beginCompressTask({required XlogInfoItemViewModel vm}) async {

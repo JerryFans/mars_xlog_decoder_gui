@@ -50,14 +50,16 @@ class XlogInfoController extends GetxController {
   Future<String> genKey() async {
     var pyPath = path.joinAll([
       _assetsDir.path,
-      "gen_key",
-      "gen_key"
+      Platform.isWindows ? "xlog-decoder.exe" : "xlog-decoder",
     ]);
-
-    var process = await Process.run(pyPath, []);
+    var process = await Process.run(pyPath, ["gen-key"]);
     print("result:\n");
-    print("${process.stdout}");
-    return process.stdout;
+    print(process.stdout);
+    return process.stdout
+        .toString()
+        .split("\n")[0]
+        .split("private_key:")[1]
+        .trim();
   }
 
   void beginCompressTask({required XlogInfoItemViewModel vm}) async {
@@ -68,7 +70,8 @@ class XlogInfoController extends GetxController {
       return;
     }
 
-    if (this.isEnableCrypt.value == true && (this.cryptMd5.value.isEmpty || this.cryptMd5.value.length != 64)) {
+    if (this.isEnableCrypt.value == true &&
+        (this.cryptMd5.value.isEmpty || this.cryptMd5.value.length != 64)) {
       print("private key is empty");
       showToast("Private Key 为空或长度不对（64位）", textPadding: EdgeInsets.all(15));
       vm.updateStatus(XlogInfoStatus.fail);
@@ -85,18 +88,13 @@ class XlogInfoController extends GetxController {
       return;
     }
 
+    var execFileName = Platform.isWindows ? "xlog-decoder.exe" : "xlog-decoder";
     var pyPath = path.joinAll([
       _assetsDir.path,
-      "decode_mars_crypt_log_file",
-      "decode_mars_crypt_log_file"
+      execFileName,
     ]);
-
     if (this.isEnableCrypt.value == false) {
-      pyPath = path.joinAll([
-        _assetsDir.path,
-        "decode_mars_nocrypt_log_file",
-        "decode_mars_nocrypt_log_file"
-      ]);
+      pyPath = path.joinAll([_assetsDir.path, execFileName]);
     }
 
     List<String> args = <String>[vm.file.path];
@@ -104,10 +102,22 @@ class XlogInfoController extends GetxController {
       args.insert(0, this.cryptMd5.value);
     }
 
-    var process = await Process.run(pyPath, args);
+    var process = await Process.run(
+      pyPath,
+      [
+        "decode",
+        "-i",
+        vm.file.path,
+        "-p",
+        this.cryptMd5.value,
+        "-o",
+        "${vm.file.path}.log"
+      ],
+    );
 
     if (process.exitCode != 0) {
-      showToast("Xlog解析失败，请检查你的Private Key是否正确", textPadding: EdgeInsets.all(15));
+      showToast("Xlog解析失败，请检查你的Private Key是否正确",
+          textPadding: EdgeInsets.all(15));
       vm.updateStatus(XlogInfoStatus.fail);
       taskList.refresh();
       return;
@@ -117,11 +127,17 @@ class XlogInfoController extends GetxController {
 
     var isExist = await file.exists();
     if (isExist) {
-      await Process.run("mv", [
-        "-f",
-        file.path,
-        savePath.value,
-      ]);
+      Platform.isWindows
+          ? await Process.run("xcopy", [
+              file.path,
+              savePath.value,
+              "/y",
+            ])
+          : await Process.run("cp", [
+              "-f",
+              file.path,
+              savePath.value,
+            ]);
       vm.saveFile = File(path.joinAll([savePath.value, file.fileName]));
       vm.updateStatus(XlogInfoStatus.success);
       taskList.refresh();

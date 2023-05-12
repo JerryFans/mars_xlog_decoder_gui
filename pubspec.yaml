@@ -31,8 +31,8 @@ dependencies:
     path: path_provider-2.0.4
   path_provider_macos:
     path: path_provider_macos-2.0.4
-  provider: ^5.0.0
-  get: 4.5.1
+  provider: ^6.0.0
+  get: 4.6.5
   event_bus: ^2.0.0
   oktoast: ^3.1.5
   window_manager: ^0.1.9
@@ -60,9 +60,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-    - images/gen_key/
-    - images/decode_mars_crypt_log_file/
-    - images/decode_mars_nocrypt_log_file/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

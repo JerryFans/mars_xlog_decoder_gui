@@ -1,0 +1,68 @@
+name: Flutter CI
+
+on: push
+
+jobs:
+
+  build-and-release-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+          flutter-version: '3.0.5'
+      - name: Install project dependencies
+        run: flutter pub get
+      - name: Enable windows build
+        run: flutter config --enable-windows-desktop
+      - name: Build artifacts
+        run: flutter build windows --release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: xlog_decoder_ui
+          path: build/windows/runner/Release/
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: xlog_decoder_ui-${{github.ref_name}}-windows.zip
+          directory: build/windows/runner/Release
+      - name: Windows Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+        with:
+          files: build/windows/runner/Release/xlog_decoder_ui-${{github.ref_name}}-windows.zip
+
+#  build-and-release-macos:
+#    runs-on: macos-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: subosito/flutter-action@v2
+#        with:
+#          channel: 'stable'
+#          architecture: x64
+#          flutter-version: '3.0.5'
+#      - name: Install project dependencies
+#        run: flutter pub get
+#      - name: Enable macOS build
+#        run: flutter config --enable-macos-desktop
+#      - name: Build artifacts
+#        run: flutter build macos --release  --no-codesign
+#      - name: Archive Release
+#        uses: thedoctor0/zip-release@master
+#        with:
+#          type: 'zip'
+#          filename: xlog_decoder_ui-${{github.ref_name}}-macos.zip
+#          directory: build/macos/Build/Products/Release
+#      - name: macOS Release
+#        uses: softprops/action-gh-release@v1
+#        if: startsWith(github.ref, 'refs/tags/')
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+#        with:
+#          files: build/macos/Build/Products/Release/xlog_decoder_ui-${{github.ref_name}}-macos.zip

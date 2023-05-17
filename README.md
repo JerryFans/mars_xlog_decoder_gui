@@ -10,15 +10,17 @@ A Flutter Desktop GUI To Decode Tencent Mars Xlog File （基于腾讯 Mars Xlog
 
 ## Platform Support
 
+Windows版本暂时需要自己编译，我手头没有Windows机器
+
 | Linux | macOS | Windows |
 | :---: | :---: | :-----: |
-|   ➖   |   ✔️   |    ➖  |
+|   ➖   |   ✔️   |    ✔️  |
 
-## Release 1.3.0
+## Release 1.3.1
 
 ### Mac
 
-[XlogDecoder.dmg](https://github.com/JerryFans/mars_xlog_decoder_gui/releases/download/1.3.0/XlogDecoder.dmg)
+[XlogDecoder.dmg](https://github.com/JerryFans/mars_xlog_decoder_gui/releases/download/v1.3.1/XlogDecoder_1.3.1.dmg)
 
 
 ## Getting Started

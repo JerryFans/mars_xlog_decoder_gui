@@ -97,23 +97,36 @@ class XlogInfoController extends GetxController {
       pyPath = path.joinAll([_assetsDir.path, execFileName]);
     }
 
-    List<String> args = <String>[vm.file.path];
+    ProcessResult process;
     if (this.isEnableCrypt.value == true) {
-      args.insert(0, this.cryptMd5.value);
+      //加密
+      debugPrint("执行带加密key命令");
+      process = await Process.run(
+        pyPath,
+        [
+          "decode",
+          "-i",
+          vm.file.path,
+          "-p",
+          this.cryptMd5.value,
+          "-o",
+          "${vm.file.path}.log"
+        ],
+      );
+    } else {
+      //不加密
+      debugPrint("执行不加密命令");
+      process = await Process.run(
+        pyPath,
+        [
+          "decode",
+          "-i",
+          vm.file.path,
+          "-o",
+          "${vm.file.path}.log"
+        ],
+      );
     }
-
-    var process = await Process.run(
-      pyPath,
-      [
-        "decode",
-        "-i",
-        vm.file.path,
-        "-p",
-        this.cryptMd5.value,
-        "-o",
-        "${vm.file.path}.log"
-      ],
-    );
 
     if (process.exitCode != 0) {
       showToast("Xlog解析失败，请检查你的Private Key是否正确",

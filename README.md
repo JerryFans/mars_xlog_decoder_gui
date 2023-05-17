@@ -1,3 +1,18 @@
+
+<p align="center">
+  <a href="https://github.com/flutter/flutter">
+    <img alt="Language Flutter" src="https://img.shields.io/badge/Language-Flutter-blue.svg?longCache=true&style=flat-square">
+  </a>
+  <a href="https://github.com/JerryFans/TinyPNG4Flutter"><img src="https://img.shields.io/badge/Platform-macOS-blue.svg?longCache=true&style=flat-square">
+  </a>
+    <a href="https://github.com/JerryFans/TinyPNG4Flutter"><img src="https://img.shields.io/badge/Platform-windows-blue.svg?longCache=true&style=flat-square">
+  </a>
+    <a href="https://github.com/leanflutter/flutter_distributor"><img src="https://img.shields.io/badge/distribute%20with-flutter__distributor-green?style=flat-square">
+  </a>
+  <a href="https://github.com/JerryFans/TinyPNG4Flutter/issues"><img src="https://img.shields.io/github/issues/JerryFans/mars_xlog_decoder_gui">
+  </a>
+</p>
+
 # mars_xlog_decoder_gui
 
 A Flutter Desktop GUI To Decode Tencent Mars Xlog File （基于腾讯 Mars Xlog 日志解析 GUI 内置解码 无需安装 python 库支持）

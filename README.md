@@ -15,7 +15,7 @@
 
 # mars_xlog_decoder_gui
 
-A Flutter Desktop GUI To Decode Tencent Mars Xlog File （基于腾讯 Mars Xlog 日志解析 GUI 内置解码 无需安装 python 库支持）
+A Flutter Desktop GUI To Decode Tencent Mars Xlog File （基于腾讯 Mars Xlog 日志解析 GUI 内置解码 无需安装任何环境）
 
 解码内核程序由Python改为Rust，解码速度提升30倍+,感谢[@suyulin](https://github.com/suyulin) 小伙伴的PR.
 

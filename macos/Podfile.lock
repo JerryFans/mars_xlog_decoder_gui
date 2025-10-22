@@ -17,7 +17,7 @@ DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
   - native_context_menu (from `Flutter/ephemeral/.symlinks/plugins/native_context_menu/macos`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
-  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos`)
+  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
 EXTERNAL SOURCES:
@@ -30,18 +30,18 @@ EXTERNAL SOURCES:
   path_provider_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
   shared_preferences_foundation:
-    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos
+    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin
   window_manager:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
-  desktop_drop: 69eeff437544aa619c8db7f4481b3a65f7696898
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  native_context_menu: 8b710e17c5962cf3f005b805eb97cce668b3839a
-  path_provider_macos: 160cab0d5461f0c0e02995469a98f24bdb9a3f1f
-  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
-  window_manager: 02776e5a599084cd4576e27a42dd5ec6f49132cf
+  desktop_drop: e0b672a7d84c0a6cbc378595e82cdb15f2970a43
+  FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
+  native_context_menu: bdd0ebd36a94cbb869111d7d057771a1c90c450a
+  path_provider_macos: 982456d73d6592ced25ed951ae1a32f95a82049f
+  shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
+  window_manager: cca01c8096ad7e5cabeec56d2d987dca79ba658b
 
-PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
+PODFILE CHECKSUM: 0d3963a09fc94f580682bd88480486da345dc3f0
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.16.2

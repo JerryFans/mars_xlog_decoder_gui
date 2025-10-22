@@ -70,8 +70,10 @@ class XlogInfoController extends GetxController {
       return;
     }
 
+    final privateKey = this.cryptMd5.value.trim();
+
     if (this.isEnableCrypt.value == true &&
-        (this.cryptMd5.value.isEmpty || this.cryptMd5.value.length != 64)) {
+        (privateKey.isEmpty || privateKey.length != 64)) {
       print("private key is empty");
       showToast("Private Key 为空或长度不对（64位）", textPadding: EdgeInsets.all(15));
       vm.updateStatus(XlogInfoStatus.fail);
@@ -88,44 +90,48 @@ class XlogInfoController extends GetxController {
       return;
     }
 
-    var execFileName = Platform.isWindows ? "xlog-decoder.exe" : "xlog-decoder";
-    var pyPath = path.joinAll([
-      _assetsDir.path,
-      execFileName,
-    ]);
-    if (this.isEnableCrypt.value == false) {
-      pyPath = path.joinAll([_assetsDir.path, execFileName]);
-    }
+    final outputPath = path.join(
+      savePath.value,
+      "${vm.file.fileName}.log",
+    );
+
+    final execFileName =
+        Platform.isWindows ? "xlog-decoder.exe" : "xlog-decoder";
+    final execPath = path.join(_assetsDir.path, execFileName);
 
     ProcessResult process;
     if (this.isEnableCrypt.value == true) {
       //加密
       debugPrint("执行带加密key命令");
-      process = await Process.run(
-        pyPath,
-        [
-          "decode",
-          "-i",
-          vm.file.path,
-          "-p",
-          this.cryptMd5.value,
-          "-o",
-          "${vm.file.path}.log"
-        ],
-      );
+      process = await Process.run(execPath, [
+        "decode",
+        "-i",
+        vm.file.path,
+        "-p",
+        privateKey.toLowerCase(),
+        "-o",
+        outputPath,
+      ]);
     } else {
       //不加密
       debugPrint("执行不加密命令");
-      process = await Process.run(
-        pyPath,
-        [
-          "decode",
-          "-i",
-          vm.file.path,
-          "-o",
-          "${vm.file.path}.log"
-        ],
-      );
+      process = await Process.run(execPath, [
+        "decode",
+        "-i",
+        vm.file.path,
+        "-o",
+        outputPath,
+      ]);
+    }
+
+    final stdoutMsg = process.stdout?.toString().trim() ?? '';
+    final stderrMsg = process.stderr?.toString().trim() ?? '';
+    debugPrint("xlog-decoder exitCode: ${process.exitCode}");
+    if (stdoutMsg.isNotEmpty) {
+      debugPrint("xlog-decoder stdout: $stdoutMsg");
+    }
+    if (stderrMsg.isNotEmpty) {
+      debugPrint("xlog-decoder stderr: $stderrMsg");
     }
 
     if (process.exitCode != 0) {
@@ -136,22 +142,25 @@ class XlogInfoController extends GetxController {
       return;
     }
 
-    var file = File(vm.file.path + ".log");
+    var file = File(outputPath);
 
     var isExist = await file.exists();
     if (isExist) {
-      Platform.isWindows
-          ? await Process.run("xcopy", [
-              file.path,
-              savePath.value,
-              "/y",
-            ])
-          : await Process.run("cp", [
-              "-f",
-              file.path,
-              savePath.value,
-            ]);
-      vm.saveFile = File(path.joinAll([savePath.value, file.fileName]));
+      final fileLength = await file.length();
+      if (fileLength == 0) {
+        await file.delete().catchError((_) {});
+        if (this.isEnableCrypt.value == false &&
+            await _decodeWithPython(vm.file.path, outputPath)) {
+          file = File(outputPath);
+        } else {
+          showToast("Xlog解析失败：输出内容为空，请检查输入文件与私钥",
+              textPadding: EdgeInsets.all(15));
+          vm.updateStatus(XlogInfoStatus.fail);
+          taskList.refresh();
+          return;
+        }
+      }
+      vm.saveFile = file;
       vm.updateStatus(XlogInfoStatus.success);
       taskList.refresh();
     } else {
@@ -207,6 +216,70 @@ class XlogInfoController extends GetxController {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<bool> _decodeWithPython(String inputPath, String outputPath) async {
+    final scriptPath = path.join(_assetsDir.path, "decode_xlog_file.py");
+    final pythonCandidates = Platform.isWindows
+        ? <String>["python", "py"]
+        : <String>["python3", "python"];
+    debugPrint("尝试使用 Python 脚本解码: $scriptPath");
+
+    ProcessResult? result;
+    String? usedCmd;
+    try {
+      for (final cmd in pythonCandidates) {
+        try {
+          debugPrint("尝试执行 Python 命令: $cmd");
+          result = await Process.run(
+            cmd,
+            [
+              scriptPath,
+              inputPath,
+              outputPath,
+            ],
+          );
+          usedCmd = cmd;
+          break;
+        } on ProcessException catch (e) {
+          debugPrint("Python 命令 $cmd 不可用: $e");
+          continue;
+        }
+      }
+      if (result == null) {
+        if (Platform.isWindows) {
+          showToast("未找到 Python 环境，请安装 Python 并将其加入 PATH",
+              textPadding: EdgeInsets.all(15));
+        }
+        return false;
+      }
+      final stdoutMsg = result.stdout?.toString().trim() ?? '';
+      final stderrMsg = result.stderr?.toString().trim() ?? '';
+      debugPrint(
+          "python decode (${usedCmd ?? 'unknown'}) exitCode: ${result.exitCode}");
+      if (stdoutMsg.isNotEmpty) {
+        debugPrint("python decode stdout: $stdoutMsg");
+      }
+      if (stderrMsg.isNotEmpty) {
+        debugPrint("python decode stderr: $stderrMsg");
+      }
+      if (result.exitCode != 0) {
+        return false;
+      }
+      final file = File(outputPath);
+      if (!await file.exists()) {
+        return false;
+      }
+      final length = await file.length();
+      if (length == 0) {
+        await file.delete().catchError((_) {});
+        return false;
+      }
+      return true;
+    } catch (e) {
+      debugPrint("python decode error: $e");
+      return false;
     }
   }
 }

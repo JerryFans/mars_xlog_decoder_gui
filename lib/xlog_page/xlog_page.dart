@@ -42,13 +42,14 @@ class _XlogPageState extends State<XlogPage> {
       if (savePath == null || savePath.isEmpty) {
         try {
           var provider = PathProviderUtil.provider();
-          String? path = await provider.getDownloadsPath();
-          print("get down path $path");
-          if (path == null) return;
-          final filePath =
-              path + PathProviderUtil.platformDirectoryLine() + "XlogOutput";
-          pre.setString(KXlogSavePathKey, filePath);
-          controller.savePath.value = filePath;
+          final downloadsPath = await provider.getDownloadsPath();
+          if (downloadsPath != null && downloadsPath.isNotEmpty) {
+            print("get down path $downloadsPath");
+            final separator = PathProviderUtil.platformDirectoryLine();
+            final filePath = downloadsPath + separator + "XlogOutput";
+            pre.setString(KXlogSavePathKey, filePath);
+            controller.savePath.value = filePath;
+          }
         } catch (e) {}
       } else {
         controller.savePath.value = savePath;
